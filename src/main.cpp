@@ -1,17 +1,43 @@
 #include <Arduino.h>
 
+
+//LEDS
+#define LOWERRED 10
+#define UPPERRED 20
+
+#define LOWERGREEN 20 
+#define UPPERGREEN 30
+
+#define LOWERBLUE 30
+#define UPPERBLUE 40
+
+#define RED 2
+#define GREEN 3
+#define BLUE 4
+
+//SENSOR
+#define OFFSET 7
+
 #define THERMISTORPIN A0         
 #define THERMISTORNOMINAL 10000      
 #define TEMPERATURENOMINAL 25   
 #define NUMSAMPLES 5
 #define BCOEFFICIENT 3950
-#define SERIESRESISTOR 10000    
+#define SERIESRESISTOR 10000
  
 int samples[NUMSAMPLES];
  
 void setup(void) {
   Serial.begin(9600);
   analogReference(EXTERNAL);
+  analogReadResolution(12);
+
+  pinMode(RED, OUTPUT); //RED
+  pinMode(GREEN, OUTPUT); //GREEN
+  pinMode(BLUE, OUTPUT); //BLUE
+  digitalWrite(RED, LOW);
+  digitalWrite(GREEN, LOW);
+  digitalWrite(BLUE, LOW);
 }
  
 void loop(void) {
@@ -27,7 +53,11 @@ void loop(void) {
   for (i=0; i< NUMSAMPLES; i++) {
      average += samples[i];
   }
+  
   average /= NUMSAMPLES;
+
+  Serial.print("Avarage ADC "); 
+  Serial.println(average);
  
   average = 1023 / average - 1;
   average = SERIESRESISTOR / average;
@@ -41,10 +71,23 @@ void loop(void) {
   steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
   steinhart = 1.0 / steinhart;                 // Invert
   steinhart -= 273.15;                         // convert to C
-  
+
   Serial.print("Temperature "); 
   Serial.print(steinhart);
   Serial.println(" *C");
+
+  //RED
+  if (steinhart =< UPPERRED && steinhart => LOWERRED) {
+    digitalWrite(RED, HIGH);
+  }
+  //GREEN
+  if (steinhart =< UPPERGREEN && steinhart => LOWERGREEN) {
+    digitalWrite(GREEN, HIGH);
+  }
+  //BLUE
+  if (steinhart =< UPPERBLUE && steinhart => LOWERBLUE) {
+    digitalWrite(BLUE, HIGH);
+  }
   
   delay(1000);
 }
