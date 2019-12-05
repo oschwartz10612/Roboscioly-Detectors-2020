@@ -1,5 +1,7 @@
 #include <Arduino.h>
+#include <ACD.h>
 
+ADC *adc = new ADC(); // adc object
 
 //LEDS
 #define LOWERRED 10
@@ -29,8 +31,8 @@ int samples[NUMSAMPLES];
  
 void setup(void) {
   Serial.begin(9600);
-  analogReference(EXTERNAL);
-  analogReadResolution(12);
+  adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
+  adc->setResolution(16);
 
   pinMode(RED, OUTPUT); //RED
   pinMode(GREEN, OUTPUT); //GREEN
@@ -45,7 +47,7 @@ void loop(void) {
   float average;
  
   for (i=0; i< NUMSAMPLES; i++) {
-   samples[i] = analogRead(THERMISTORPIN);
+   samples[i] = adc->analogRead(THERMISTORPIN, ADC_0);
    delay(10);
   }
   
@@ -59,7 +61,7 @@ void loop(void) {
   Serial.print("Avarage ADC "); 
   Serial.println(average);
  
-  average = 1023 / average - 1;
+  average = getMaxValue(ADC_0) / average - 1;
   average = SERIESRESISTOR / average;
   Serial.print("Thermistor resistance "); 
   Serial.println(average);
@@ -77,17 +79,19 @@ void loop(void) {
   Serial.println(" *C");
 
   //RED
-  if (steinhart =< UPPERRED && steinhart => LOWERRED) {
+  if (steinhart < UPPERRED && steinhart > LOWERRED) {
     digitalWrite(RED, HIGH);
   }
   //GREEN
-  if (steinhart =< UPPERGREEN && steinhart => LOWERGREEN) {
+  if (steinhart < UPPERGREEN && steinhart > LOWERGREEN) {
     digitalWrite(GREEN, HIGH);
   }
   //BLUE
-  if (steinhart =< UPPERBLUE && steinhart => LOWERBLUE) {
+  if (steinhart < UPPERBLUE && steinhart > LOWERBLUE) {
     digitalWrite(BLUE, HIGH);
   }
+
+  adc->printError();
   
   delay(1000);
 }
