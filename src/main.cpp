@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <ACD.h>
+#include "ADC.h"
 
 ADC *adc = new ADC(); // adc object
 
@@ -61,7 +61,7 @@ void loop(void) {
   Serial.print("Avarage ADC "); 
   Serial.println(average);
  
-  average = getMaxValue(ADC_0) / average - 1;
+  average = adc->getMaxValue(ADC_0) / average - 1;
   average = SERIESRESISTOR / average;
   Serial.print("Thermistor resistance "); 
   Serial.println(average);
