@@ -24,7 +24,7 @@ ADC *adc = new ADC(); // adc object
 #define THERMISTORNOMINAL 10000      
 #define TEMPERATURENOMINAL 25   
 #define NUMSAMPLES 5
-#define BCOEFFICIENT 3892
+#define BCOEFFICIENT 3618.85
 #define SERIESRESISTOR 10000
  
 int samples[NUMSAMPLES];
@@ -32,7 +32,7 @@ int samples[NUMSAMPLES];
 void setup(void) {
   Serial.begin(9600);
   adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
-  adc->setResolution(16);
+  adc->setResolution(12);
 
   pinMode(RED, OUTPUT); //RED
   pinMode(GREEN, OUTPUT); //GREEN
