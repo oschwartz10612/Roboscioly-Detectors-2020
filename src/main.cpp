@@ -24,7 +24,7 @@ ADC *adc = new ADC(); // adc object
 #define THERMISTORNOMINAL 10000      
 #define TEMPERATURENOMINAL 25   
 #define NUMSAMPLES 5
-#define BCOEFFICIENT 3950
+#define BCOEFFICIENT 3892
 #define SERIESRESISTOR 10000
  
 int samples[NUMSAMPLES];
