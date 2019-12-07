@@ -108,21 +108,21 @@ void loop(void) {
     Serial.print(temp);
     Serial.println(" *C");
 
-    // RED
-    // if (temp < UPPERRED && temp > LOWERRED) {
-    //   Serial.println("RED");
-    //   digitalWrite(RED, HIGH);
-    // }
-    // // GREEN
-    // if (temp < UPPERGREEN && temp > LOWERGREEN) {
-    //   Serial.println("GREEN");
-    //   digitalWrite(GREEN, HIGH);
-    // }
-    // // BLUE
-    // if (temp < UPPERBLUE && temp > LOWERBLUE) {
-    //   Serial.println("BLUE");
-    //   digitalWrite(BLUE, HIGH);
-    // }
+    //RED
+    if (temp < UPPERRED && temp > LOWERRED) {
+      Serial.println("RED");
+      digitalWrite(RED, HIGH);
+    }
+    // GREEN
+    if (temp < UPPERGREEN && temp > LOWERGREEN) {
+      Serial.println("GREEN");
+      digitalWrite(GREEN, HIGH);
+    }
+    // BLUE
+    if (temp < UPPERBLUE && temp > LOWERBLUE) {
+      Serial.println("BLUE");
+      digitalWrite(BLUE, HIGH);
+    }
 
     adc->printError();
   }
