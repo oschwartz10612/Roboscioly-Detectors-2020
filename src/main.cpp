@@ -5,26 +5,27 @@
 ADC *adc = new ADC(); // adc object
 
 //LEDS
-#define LOWERRED 10
-#define UPPERRED 20
+#define LOWERRED -30
+#define UPPERRED 22
 
-#define LOWERGREEN 20 
+#define LOWERGREEN 23 
 #define UPPERGREEN 30
 
-#define LOWERBLUE 30
-#define UPPERBLUE 40
+#define LOWERBLUE 31
+#define UPPERBLUE 50
 
 #define BLUE 2
 #define RED 3
 #define GREEN 4
 
 //SENSOR
-#define OFFSET 18;
+#define OFFSET 22.71;
+#define OFFSET2 0;
 
 #define THERMISTORPIN A0         
 #define THERMISTORNOMINAL 10000      
 #define TEMPERATURENOMINAL 25   
-#define NUMSAMPLES 50
+#define NUMSAMPLES 200
 #define SERIESRESISTOR 10000
  
 int samples[NUMSAMPLES];
@@ -48,11 +49,7 @@ void loop(void) {
   if (Serial.available() > 0) {
     char t = Serial.read();
     Serial.flush();
-
-    digitalWrite(RED, LOW);
-	  digitalWrite(GREEN, LOW);
-	  digitalWrite(BLUE, LOW);
-
+    
     uint8_t i;
     float average;
   
@@ -87,7 +84,12 @@ void loop(void) {
     //y=mx+b
     temp = 626.5 * voltage;
     temp = temp - 2482;
-    temp = temp + OFFSET;
+    if(temp > 50) {
+      temp = temp - OFFSET2;
+    } else {
+      temp = temp + OFFSET;
+    }
+    
 
     Serial.print("Temperature from voltage EQ: "); 
     Serial.print(temp);
@@ -102,7 +104,11 @@ void loop(void) {
     tempVal = 1.85e-16 * pow(R, 3);
     temp = temp + tempVal;
     temp = temp - 104.9;
-    temp = temp + OFFSET;
+    if(temp > 50) {
+      temp = temp - OFFSET2;
+    } else {
+      temp = temp + OFFSET;
+    }
 
     Serial.print("Temperature from resistance EQ: "); 
     Serial.print(temp);
@@ -112,16 +118,22 @@ void loop(void) {
     if (temp < UPPERRED && temp > LOWERRED) {
       Serial.println("RED");
       digitalWrite(RED, HIGH);
+      digitalWrite(GREEN, LOW);
+      digitalWrite(BLUE, LOW);
     }
     // GREEN
     if (temp < UPPERGREEN && temp > LOWERGREEN) {
       Serial.println("GREEN");
       digitalWrite(GREEN, HIGH);
+      digitalWrite(RED, LOW);
+      digitalWrite(BLUE, LOW);
     }
     // BLUE
     if (temp < UPPERBLUE && temp > LOWERBLUE) {
       Serial.println("BLUE");
       digitalWrite(BLUE, HIGH);
+      digitalWrite(RED, LOW);
+      digitalWrite(GREEN, LOW);
     }
 
     adc->printError();
