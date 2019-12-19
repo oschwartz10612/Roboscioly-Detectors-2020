@@ -1,8 +1,5 @@
 #include <Arduino.h>
 #include <math.h>
-#include "ADC.h"
-
-ADC *adc = new ADC(); // adc object
 
 //LEDS
 #define LOWERRED -30
@@ -19,21 +16,19 @@ ADC *adc = new ADC(); // adc object
 #define GREEN 4
 
 //SENSOR
-#define OFFSET 22.71;
+#define OFFSET 0;
 #define OFFSET2 0;
 
 #define THERMISTORPIN A0         
 #define THERMISTORNOMINAL 10000      
 #define TEMPERATURENOMINAL 25   
-#define NUMSAMPLES 200
-#define SERIESRESISTOR 10000
+#define NUMSAMPLES 50
+#define SERIESRESISTOR 1000
  
 int samples[NUMSAMPLES];
  
 void setup(void) {
 	Serial.begin(9600);
-	adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
-	adc->setResolution(16);
 
 	pinMode(RED, OUTPUT); //RED
 	pinMode(GREEN, OUTPUT); //GREEN
@@ -46,15 +41,12 @@ void setup(void) {
 }
  
 void loop(void) {
-  if (Serial.available() > 0) {
-    char t = Serial.read();
-    Serial.flush();
-    
+
     uint8_t i;
     float average;
   
     for (i=0; i< NUMSAMPLES; i++) {
-      samples[i] = adc->analogRead(THERMISTORPIN, ADC_0);
+      samples[i] = analogRead(THERMISTORPIN);
       delay(10);
     }
     
@@ -69,13 +61,13 @@ void loop(void) {
     Serial.println(average);
 
     float R;
-    R = (adc->getMaxValue(ADC_0) / average)-1;
+    R = (1024 / average)-1;
     R = SERIESRESISTOR / R;
     Serial.print("Thermistor resistance: "); 
     Serial.println(R);
 
     float voltage;
-    voltage = average * (4.0960/adc->getMaxValue(ADC_0));
+    voltage = average * (4.0960/1024);
 
     Serial.print("Voltage "); 
     Serial.println(voltage);
@@ -91,28 +83,28 @@ void loop(void) {
     }
     
 
-    Serial.print("Temperature from voltage EQ: "); 
-    Serial.print(temp);
-    Serial.println(" *C");
+    // Serial.print("Temperature from voltage EQ: "); 
+    // Serial.print(temp);
+    // Serial.println(" *C");
 
-    //T=-104.9+0.0004889R-(5.13*10-10)R2+(1.85*10-16)R3
-    float tempVal;
+    // //T=-104.9+0.0004889R-(5.13*10-10)R2+(1.85*10-16)R3
+    // float tempVal;
 
-    temp = 0.0004889 * R;
-    tempVal = 5.13e-10 * pow(R, 2);
-    temp = temp - tempVal;
-    tempVal = 1.85e-16 * pow(R, 3);
-    temp = temp + tempVal;
-    temp = temp - 104.9;
-    if(temp > 50) {
-      temp = temp - OFFSET2;
-    } else {
-      temp = temp + OFFSET;
-    }
+    // temp = 0.0004889 * R;
+    // tempVal = 5.13e-10 * pow(R, 2);
+    // temp = temp - tempVal;
+    // tempVal = 1.85e-16 * pow(R, 3);
+    // temp = temp + tempVal;
+    // temp = temp - 104.9;
+    // if(temp > 50) {
+    //   temp = temp - OFFSET2;
+    // } else {
+    //   temp = temp + OFFSET;
+    // }
 
-    Serial.print("Temperature from resistance EQ: "); 
-    Serial.print(temp);
-    Serial.println(" *C");
+    // Serial.print("Temperature from resistance EQ: "); 
+    // Serial.print(temp);
+    // Serial.println(" *C");
 
     //RED
     if (temp < UPPERRED && temp > LOWERRED) {
@@ -136,7 +128,5 @@ void loop(void) {
       digitalWrite(GREEN, LOW);
     }
 
-    adc->printError();
-  }
-  delay(100);
+  delay(1000);
 }
