@@ -11,19 +11,17 @@
 #define LOWERBLUE 31
 #define UPPERBLUE 50
 
-#define BLUE 2
+#define BLUE 4
 #define RED 3
-#define GREEN 4
+#define GREEN 2
 
 //SENSOR
 #define OFFSET 0;
 #define OFFSET2 0;
 
 #define THERMISTORPIN A0         
-#define THERMISTORNOMINAL 10000      
-#define TEMPERATURENOMINAL 25   
 #define NUMSAMPLES 50
-#define SERIESRESISTOR 1000
+#define VCONSTANT 5/1023
  
 int samples[NUMSAMPLES];
  
@@ -60,27 +58,27 @@ void loop(void) {
     Serial.print("Avarage ADC: "); 
     Serial.println(average);
 
-    float R;
-    R = (1024 / average)-1;
-    R = SERIESRESISTOR / R;
-    Serial.print("Thermistor resistance: "); 
-    Serial.println(R);
+    // float R;
+    // R = (1024 / average)-1; 
+    // R = SERIESRESISTOR / R;
+    // Serial.print("Thermistor resistance: "); 
+    // Serial.println(R);
 
     float voltage;
-    voltage = average * (4.0960/1024);
+    voltage = average * VCONSTANT;
 
     Serial.print("Voltage "); 
-    Serial.println(voltage);
+    Serial.println(voltage, 20);
   
-    float temp;
+    //float temp;
     //y=mx+b
-    temp = 626.5 * voltage;
-    temp = temp - 2482;
-    if(temp > 50) {
-      temp = temp - OFFSET2;
-    } else {
-      temp = temp + OFFSET;
-    }
+    // temp = 626.5 * voltage;
+    // temp = temp - 2482;
+    // if(temp > 50) {
+    //   temp = temp - OFFSET2;
+    // } else {
+    //   temp = temp + OFFSET;
+    // }
     
 
     // Serial.print("Temperature from voltage EQ: "); 
@@ -106,27 +104,27 @@ void loop(void) {
     // Serial.print(temp);
     // Serial.println(" *C");
 
-    //RED
-    if (temp < UPPERRED && temp > LOWERRED) {
-      Serial.println("RED");
-      digitalWrite(RED, HIGH);
-      digitalWrite(GREEN, LOW);
-      digitalWrite(BLUE, LOW);
-    }
-    // GREEN
-    if (temp < UPPERGREEN && temp > LOWERGREEN) {
-      Serial.println("GREEN");
-      digitalWrite(GREEN, HIGH);
-      digitalWrite(RED, LOW);
-      digitalWrite(BLUE, LOW);
-    }
-    // BLUE
-    if (temp < UPPERBLUE && temp > LOWERBLUE) {
-      Serial.println("BLUE");
-      digitalWrite(BLUE, HIGH);
-      digitalWrite(RED, LOW);
-      digitalWrite(GREEN, LOW);
-    }
+    // //RED
+    // if (temp < UPPERRED && temp > LOWERRED) {
+    //   Serial.println("RED");
+    //   digitalWrite(RED, HIGH);
+    //   digitalWrite(GREEN, LOW);
+    //   digitalWrite(BLUE, LOW);
+    // }
+    // // GREEN
+    // if (temp < UPPERGREEN && temp > LOWERGREEN) {
+    //   Serial.println("GREEN");
+    //   digitalWrite(GREEN, HIGH);
+    //   digitalWrite(RED, LOW);
+    //   digitalWrite(BLUE, LOW);
+    // }
+    // // BLUE
+    // if (temp < UPPERBLUE && temp > LOWERBLUE) {
+    //   Serial.println("BLUE");
+    //   digitalWrite(BLUE, HIGH);
+    //   digitalWrite(RED, LOW);
+    //   digitalWrite(GREEN, LOW);
+    // }
 
   delay(1000);
 }
