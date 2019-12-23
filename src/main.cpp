@@ -24,7 +24,7 @@ ADC *adc = new ADC(); // adc object
 
 #define THERMISTORPIN A0         
 #define NUMSAMPLES 50
-#define VCONSTANT 5.01/adc->getMaxValue(ADC_0)
+#define VCONSTANT 4.096/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
 float prev_voltage = 1000;
@@ -33,6 +33,8 @@ float prev_voltage = 1000;
 void setup(void) {
 	Serial.begin(9600);
   adc->setResolution(16);
+  adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
+
 
 	pinMode(RED, OUTPUT); //RED
 	pinMode(GREEN, OUTPUT); //GREEN
@@ -109,9 +111,6 @@ void loop(void) {
     else
     {
       Serial.print(".");
-      // digitalWrite(RED, LOW);
-      // digitalWrite(GREEN, LOW);
-      // digitalWrite(BLUE, LOW);
     }
   
     prev_voltage = voltage;    
