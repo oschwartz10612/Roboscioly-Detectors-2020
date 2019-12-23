@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include <math.h>
+#include "ADC.h"
+
+ADC *adc = new ADC(); // adc object
 
 //LEDS
 #define LOWERRED 55
@@ -11,9 +14,9 @@
 #define LOWERBLUE 0
 #define UPPERBLUE 20
 
-#define RED 2
-#define GREEN 4
-#define BLUE 6
+#define RED 3
+#define GREEN 5
+#define BLUE 7
 
 //SENSOR
 #define OFFSET 0;
@@ -21,14 +24,15 @@
 
 #define THERMISTORPIN A0         
 #define NUMSAMPLES 50
-#define VCONSTANT 5/1023
+#define VCONSTANT 5.01/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
-float prev_average = 1000;
+float prev_voltage = 1000;
 
  
 void setup(void) {
 	Serial.begin(9600);
+  adc->setResolution(16);
 
 	pinMode(RED, OUTPUT); //RED
 	pinMode(GREEN, OUTPUT); //GREEN
@@ -38,7 +42,6 @@ void setup(void) {
 	digitalWrite(RED, LOW);
 	digitalWrite(GREEN, LOW);
 	digitalWrite(BLUE, LOW);
-
 }
  
 void loop(void) {
@@ -47,7 +50,7 @@ void loop(void) {
     float average;
   
     for (i=0; i< NUMSAMPLES; i++) {
-      samples[i] = analogRead(THERMISTORPIN);
+      samples[i] = adc->analogRead(THERMISTORPIN, ADC_0);
       delay(10);
     }
 
@@ -58,19 +61,16 @@ void loop(void) {
   
     average /= NUMSAMPLES;
 
-    //Serial.print("Average ADC: "); 
-    //Serial.println(average);
+    // Serial.print("Average ADC: "); 
+    // Serial.println(average);
 
     float voltage;
     voltage = average * VCONSTANT;
 
     float delta_voltage;
-    delta_voltage = abs(average - prev_average);
+    delta_voltage = abs(voltage - prev_voltage);
 
     //Temperature function T(v) = (4.506)v^2-(2.392)v-(0.007079)
-    
-    //Serial.print("Temperature: ");
-    //Serial.println(temperature);
 
     if(delta_voltage < 0.03)
     {
@@ -109,11 +109,12 @@ void loop(void) {
     else
     {
       Serial.print(".");
+      // digitalWrite(RED, LOW);
+      // digitalWrite(GREEN, LOW);
+      // digitalWrite(BLUE, LOW);
     }
   
-    prev_average = average;
-
-    
+    prev_voltage = voltage;    
 
   delay(500);
 }
