@@ -7435,8 +7435,8 @@ Teensy 3.1
 <sheets>
 <sheet>
 <plain>
-<text x="0" y="50.8" size="1.778" layer="91" rot="R90">4.096V</text>
-<text x="10.16" y="48.26" size="1.778" layer="91" rot="R180">4.096V</text>
+<text x="-5.08" y="53.34" size="1.778" layer="91" rot="R90">4.096V</text>
+<text x="12.7" y="35.56" size="1.778" layer="91" rot="R180">4.096V</text>
 </plain>
 <instances>
 <instance part="R1" gate="G$1" x="73.66" y="58.42" smashed="yes" rot="R180">
@@ -7447,9 +7447,9 @@ Teensy 3.1
 <attribute name="NAME" x="-1.4986" y="36.83" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="3.302" y="36.83" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="J1" gate="G$1" x="-7.62" y="73.66" smashed="yes" rot="R180">
-<attribute name="NAME" x="-5.08" y="66.04" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="-5.08" y="84.328" size="1.778" layer="96" rot="R180"/>
+<instance part="J1" gate="G$1" x="-15.24" y="73.66" smashed="yes" rot="R180">
+<attribute name="NAME" x="-12.7" y="66.04" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="-12.7" y="84.328" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="LED1" gate="G$1" x="63.5" y="66.04" smashed="yes" rot="R270">
 <attribute name="NAME" x="58.928" y="62.484" size="1.778" layer="95"/>
@@ -7554,6 +7554,10 @@ Teensy 3.1
 <pinref part="B1" gate="G$1" pin="AREF"/>
 <wire x1="7.62" y1="33.02" x2="17.78" y2="33.02" width="0.1524" layer="91"/>
 <junction x="7.62" y="33.02"/>
+<wire x1="0" y1="33.02" x2="-5.08" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="J1" gate="G$1" pin="3"/>
+<wire x1="-12.7" y1="73.66" x2="-5.08" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="-5.08" y1="73.66" x2="-5.08" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -7561,20 +7565,17 @@ Teensy 3.1
 <pinref part="R5" gate="G$1" pin="2"/>
 <pinref part="B1" gate="G$1" pin="VIN"/>
 <wire x1="0" y1="45.72" x2="17.78" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="5"/>
-<wire x1="-5.08" y1="78.74" x2="0" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="0" y1="78.74" x2="0" y2="45.72" width="0.1524" layer="91"/>
-<junction x="0" y="45.72"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
-<pinref part="J1" gate="G$1" pin="6"/>
-<wire x1="-5.08" y1="81.28" x2="2.54" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="R4" gate="G$1" pin="2"/>
 <wire x1="2.54" y1="83.82" x2="2.54" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="B1" gate="G$1" pin="A0/14"/>
 <wire x1="2.54" y1="81.28" x2="17.78" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="J1" gate="G$1" pin="4"/>
+<wire x1="-12.7" y1="76.2" x2="2.54" y2="76.2" width="0.1524" layer="91"/>
+<wire x1="2.54" y1="76.2" x2="2.54" y2="81.28" width="0.1524" layer="91"/>
 <junction x="2.54" y="81.28"/>
 </segment>
 </net>
@@ -7625,6 +7626,13 @@ Teensy 3.1
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="204,1,17.78,22.86,B1,GND1,,,,"/>
+<approved hash="204,1,17.78,38.1,B1,VBAT,,,,"/>
+<approved hash="204,1,17.78,40.64,B1,3.3V,,,,"/>
+<approved hash="204,1,17.78,43.18,B1,3V,,,,"/>
+<approved hash="204,1,17.78,35.56,B1,VUSB,,,,"/>
+</errors>
 </schematic>
 </drawing>
 <compatibility>

@@ -1,0 +1,13 @@
+"Part";"Value";"Device";"Package";"Description";"MF";"MPN";"OC_FARNELL";"OC_NEWARK";"POPULARITY";"SF_ID";"SPICEPREFIX";
+"B1";"TEENSY-3.1NOSILK";"TEENSY-3.1NOSILK";"TEENSY-3.1_NOSILK";"Teensy 3+ Footprint";"";"";"";"";"";"DEV-12646";"";
+"IC1";"LM4041A12DBZ";"LM4041A12DBZ";"DBZ_R-PDSO-G3";"PRECISION MICROPOWER SHUNT VOLTAGE REFERENCE";"";"LM4041A12IDBZR";"1407949";"58K5875";"";"";"";
+"J1";"RJ11-4X";"RJ11-4X";"RJ11-NO_SHIELD";"CORCOM Modular RJ Jacks No Shield";"";"6609214-3";"unknown";"19R7022";"";"";"";
+"LED1";"";"LED5MM";"LED5MM";"LED";"";"";"";"";"";"";"";
+"LED2";"";"LED5MM";"LED5MM";"LED";"";"";"";"";"";"";"";
+"LED3";"";"LED5MM";"LED5MM";"LED";"";"";"";"";"";"";"";
+"R1";"1K";"R-US_R0805";"R0805";"RESISTOR, American symbol";"";"";"";"";"85";"";"R";
+"R2";"1K";"R-US_R0805";"R0805";"RESISTOR, American symbol";"";"";"";"";"85";"";"R";
+"R3";"1K";"R-US_R0805";"R0805";"RESISTOR, American symbol";"";"";"";"";"85";"";"R";
+"R4";"10K";"R-US_R0805";"R0805";"RESISTOR, American symbol";"";"";"";"";"85";"";"R";
+"R5";"750";"R-US_R0805";"R0805";"RESISTOR, American symbol";"";"";"";"";"85";"";"R";
+"R6";"10K";"R-US_R0805";"R0805";"RESISTOR, American symbol";"";"";"";"";"85";"";"R";
