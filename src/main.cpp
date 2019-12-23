@@ -27,21 +27,10 @@ ADC *adc = new ADC(); // adc object
 #define VCONSTANT 5.01/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
-float prev_voltage = 1000;
-
  
 void setup(void) {
 	Serial.begin(9600);
   adc->setResolution(16);
-
-	pinMode(RED, OUTPUT); //RED
-	pinMode(GREEN, OUTPUT); //GREEN
-	pinMode(BLUE, OUTPUT); //BLUE
-
-	//LED's start in off condition
-	digitalWrite(RED, LOW);
-	digitalWrite(GREEN, LOW);
-	digitalWrite(BLUE, LOW);
 }
  
 void loop(void) {
@@ -61,60 +50,10 @@ void loop(void) {
   
     average /= NUMSAMPLES;
 
-    // Serial.print("Average ADC: "); 
-    // Serial.println(average);
-
     float voltage;
     voltage = average * VCONSTANT;
 
-    float delta_voltage;
-    delta_voltage = abs(voltage - prev_voltage);
-
-    //Temperature function T(v) = (4.506)v^2-(2.392)v-(0.007079)
-
-    if(delta_voltage < 0.03)
-    {
-      float temperature;
-      temperature = ((4.506) * pow(voltage, 2)) + ((-2.392) * voltage) + 1.992921;
-
-      Serial.println("");
-      Serial.println("System settled");
-      Serial.print("Voltage: ");
-      Serial.println(voltage, 5);
-      Serial.print("Temperature: "); 
-      Serial.println(temperature);
-
-      //RED
-      if (temperature < UPPERRED && temperature > LOWERRED) {
-        Serial.println("RED");
-        digitalWrite(RED, HIGH);
-        digitalWrite(GREEN, LOW);
-        digitalWrite(BLUE, LOW);
-      }
-      // GREEN
-      if (temperature < UPPERGREEN && temperature > LOWERGREEN) {
-        Serial.println("GREEN");
-        digitalWrite(GREEN, HIGH);
-        digitalWrite(RED, LOW);
-        digitalWrite(BLUE, LOW);
-      }
-      // BLUE
-      if (temperature < UPPERBLUE && temperature > LOWERBLUE) {
-        Serial.println("BLUE");
-        digitalWrite(BLUE, HIGH);
-        digitalWrite(RED, LOW);
-        digitalWrite(GREEN, LOW);
-      }
-    }
-    else
-    {
-      Serial.print(".");
-      // digitalWrite(RED, LOW);
-      // digitalWrite(GREEN, LOW);
-      // digitalWrite(BLUE, LOW);
-    }
-  
-    prev_voltage = voltage;    
+    Serial.println(voltage, 25);
 
   delay(500);
 }
