@@ -4,33 +4,16 @@
 
 ADC *adc = new ADC(); // adc object
 
-//LEDS
-#define LOWERRED 55
-#define UPPERRED 500000
-
-#define LOWERGREEN 20 
-#define UPPERGREEN 50
-
-#define LOWERBLUE 0
-#define UPPERBLUE 20
-
-#define RED 3
-#define GREEN 5
-#define BLUE 7
-
-//SENSOR
-#define OFFSET 0;
-#define OFFSET2 0;
-
 #define THERMISTORPIN A0         
 #define NUMSAMPLES 50
-#define VCONSTANT 5.01/adc->getMaxValue(ADC_0)
+#define VCONSTANT 4.096/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
  
 void setup(void) {
 	Serial.begin(9600);
   adc->setResolution(16);
+  adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
 }
  
 void loop(void) {
@@ -55,5 +38,5 @@ void loop(void) {
 
     Serial.println(voltage, 25);
 
-  delay(500);
+  delay(1000);
 }
