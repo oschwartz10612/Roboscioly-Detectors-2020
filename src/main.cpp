@@ -42,33 +42,52 @@ void loop(void) {
 
     uint8_t i;
     float average;
+    float alt_average;
   
     for (i=0; i< NUMSAMPLES; i++) {
       samples[i] = analogRead(THERMISTORPIN);
       delay(10);
     }
-    
+
     average = 0;
     for (i=0; i< NUMSAMPLES; i++) {
       average += samples[i];
     }
     
+    alt_average = 0;
+    for(i=0; i < NUMSAMPLES - 1; i++)
+    {
+      alt_average += samples[i-1];
+    }
+
     average /= NUMSAMPLES;
+    alt_average /= (NUMSAMPLES - 1);
 
-    Serial.print("Avarage ADC: "); 
+    Serial.print("Average ADC: "); 
     Serial.println(average);
-
-    // float R;
-    // R = (1024 / average)-1; 
-    // R = SERIESRESISTOR / R;
-    // Serial.print("Thermistor resistance: "); 
-    // Serial.println(R);
 
     float voltage;
     voltage = average * VCONSTANT;
 
+    float alt_voltage;
+    alt_voltage = alt_average * VCONSTANT;
+
+    float delta_voltage;
+    delta_voltage = abs(alt_voltage - voltage);
+
+    if(delta_voltage < 0.001)
+    {
+      Serial.println("System settled");
+    }
+
     Serial.print("Voltage "); 
     Serial.println(voltage, 20);
+
+    //Temperature function T(v) = (4.506)v^2-(2.392)v-(0.007079)
+    float temperature;
+    temperature = ((4.506) * pow(voltage, 2)) + ((-2.392) * voltage) - 0.007079
+    Serial.print("Temperature: ");
+    Serial.println(temperature);
   
     //float temp;
     //y=mx+b
