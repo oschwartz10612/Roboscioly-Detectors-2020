@@ -8,7 +8,7 @@ ADC *adc = new ADC(); // adc object
 #define LOWERRED 55
 #define UPPERRED 500000
 
-#define LOWERGREEN 20 
+#define LOWERGREEN 20
 #define UPPERGREEN 50
 
 #define LOWERBLUE 0
@@ -22,14 +22,14 @@ ADC *adc = new ADC(); // adc object
 #define OFFSET 0;
 #define OFFSET2 0;
 
-#define THERMISTORPIN A0         
+#define THERMISTORPIN A0
 #define NUMSAMPLES 50
 #define VCONSTANT 4.096/adc->getMaxValue(ADC_0)
- 
+
 int samples[NUMSAMPLES];
 float prev_voltage = 1000;
 
- 
+
 void setup(void) {
 	Serial.begin(9600);
   adc->setResolution(16);
@@ -45,12 +45,12 @@ void setup(void) {
 	digitalWrite(GREEN, LOW);
 	digitalWrite(BLUE, LOW);
 }
- 
+
 void loop(void) {
 
     uint8_t i;
     float average;
-  
+
     for (i=0; i< NUMSAMPLES; i++) {
       samples[i] = adc->analogRead(THERMISTORPIN, ADC_0);
       delay(10);
@@ -60,10 +60,10 @@ void loop(void) {
     for (i=0; i< NUMSAMPLES; i++) {
       average += samples[i];
     }
-  
+
     average /= NUMSAMPLES;
 
-    // Serial.print("Average ADC: "); 
+    // Serial.print("Average ADC: ");
     // Serial.println(average);
 
     float voltage;
@@ -77,13 +77,11 @@ void loop(void) {
     if(delta_voltage < 0.03)
     {
       float temperature;
-      temperature = ((4.506) * pow(voltage, 2)) + ((-2.392) * voltage) + 1.992921;
+      temperature = ((3.746) * exp(0.8312 * voltage) - (11.30));
 
       Serial.println("");
       Serial.println("System settled");
-      Serial.print("Voltage: ");
-      Serial.println(voltage, 5);
-      Serial.print("Temperature: "); 
+      Serial.print("Temperature: ");
       Serial.println(temperature);
 
       //RED
@@ -112,8 +110,8 @@ void loop(void) {
     {
       Serial.print(".");
     }
-  
-    prev_voltage = voltage;    
+
+    prev_voltage = voltage;
 
   delay(500);
 }
