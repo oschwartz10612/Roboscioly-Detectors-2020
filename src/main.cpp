@@ -14,9 +14,9 @@ ADC *adc = new ADC(); // adc object
 #define LOWERBLUE 0
 #define UPPERBLUE 20
 
-#define RED 3
-#define GREEN 5
-#define BLUE 7
+#define RED 2
+#define GREEN 3
+#define BLUE 4
 
 //SENSOR
 #define OFFSET 0;
@@ -72,12 +72,10 @@ void loop(void) {
     float delta_voltage;
     delta_voltage = abs(voltage - prev_voltage);
 
-    //Temperature function T(v) = (4.506)v^2-(2.392)v-(0.007079)
-
-    if(delta_voltage < 0.03)
+    if(delta_voltage < 0.02)
     {
       float temperature;
-      temperature = ((4.506) * pow(voltage, 2)) + ((-2.392) * voltage) + 1.992921;
+      temperature = 0.8043 * pow(voltage, 3.462) - 1.5;
 
       Serial.println("");
       Serial.println("System settled");
