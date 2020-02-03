@@ -5,14 +5,14 @@
 ADC *adc = new ADC(); // adc object
 
 //LEDS
-#define LOWERRED 55
-#define UPPERRED 500000
+#define LOWERRED 0
+#define UPPERRED 15
 
-#define LOWERGREEN 20 
-#define UPPERGREEN 50
+#define LOWERGREEN 15 
+#define UPPERGREEN 30
 
-#define LOWERBLUE 0
-#define UPPERBLUE 20
+#define LOWERBLUE 30
+#define UPPERBLUE 50
 
 #define RED 2
 #define GREEN 3
@@ -24,7 +24,7 @@ ADC *adc = new ADC(); // adc object
 
 #define THERMISTORPIN A0         
 #define NUMSAMPLES 50
-#define VCONSTANT 4.096/adc->getMaxValue(ADC_0)
+#define VCONSTANT 5/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
 float prev_voltage = 1000;
@@ -85,21 +85,21 @@ void loop(void) {
       Serial.println(temperature);
 
       //RED
-      if (temperature < UPPERRED && temperature > LOWERRED) {
+      if (temperature <= UPPERRED && temperature >= LOWERRED) {
         Serial.println("RED");
         digitalWrite(RED, HIGH);
         digitalWrite(GREEN, LOW);
         digitalWrite(BLUE, LOW);
       }
       // GREEN
-      if (temperature < UPPERGREEN && temperature > LOWERGREEN) {
+      if (temperature <= UPPERGREEN && temperature >= LOWERGREEN) {
         Serial.println("GREEN");
         digitalWrite(GREEN, HIGH);
         digitalWrite(RED, LOW);
         digitalWrite(BLUE, LOW);
       }
       // BLUE
-      if (temperature < UPPERBLUE && temperature > LOWERBLUE) {
+      if (temperature < UPPERBLUE && temperature >= LOWERBLUE) {
         Serial.println("BLUE");
         digitalWrite(BLUE, HIGH);
         digitalWrite(RED, LOW);
