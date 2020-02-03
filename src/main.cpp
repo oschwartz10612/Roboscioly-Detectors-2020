@@ -24,16 +24,15 @@ ADC *adc = new ADC(); // adc object
 
 #define THERMISTORPIN A0         
 #define NUMSAMPLES 50
-#define VCONSTANT 5/adc->getMaxValue(ADC_0)
+#define VCONSTANT 3.3/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
 float prev_voltage = 1000;
 
- 
 void setup(void) {
 	Serial.begin(9600);
   adc->setResolution(16);
-  adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
+ // adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
 
 
 	pinMode(RED, OUTPUT); //RED
@@ -75,7 +74,7 @@ void loop(void) {
     if(delta_voltage < 0.02)
     {
       float temperature;
-      temperature = 0.8043 * pow(voltage, 3.462) - 1.5;
+      temperature = 141.3 - 333.2*voltage + 295.7*pow(voltage, 2) - 106.2*pow(voltage, 3) + 14.22*pow(voltage, 4);
 
       Serial.println("");
       Serial.println("System settled");
