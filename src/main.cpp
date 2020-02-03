@@ -6,14 +6,15 @@ ADC *adc = new ADC(); // adc object
 
 #define THERMISTORPIN A0         
 #define NUMSAMPLES 50
-#define VCONSTANT 4.096/adc->getMaxValue(ADC_0)
+#define VCONSTANT 3.3/adc->getMaxValue(ADC_0)
  
 int samples[NUMSAMPLES];
+int counterPrinter = 0;
  
 void setup(void) {
 	Serial.begin(9600);
   adc->setResolution(16);
-  adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
+  //adc->setReference(ADC_REFERENCE::REF_EXT, ADC_0);
 }
  
 void loop(void) {
@@ -36,7 +37,11 @@ void loop(void) {
     float voltage;
     voltage = average * VCONSTANT;
 
+    // counterPrinter = counterPrinter + 1;
+    // Serial.print(counterPrinter);
+    // Serial.print(", ");
     Serial.println(voltage, 25);
 
-  delay(1000);
+
+  delay(500);
 }
