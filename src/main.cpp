@@ -6,16 +6,16 @@ ADC *adc = new ADC(); // adc object
 
 //LEDS
 #define LOWERRED 0
-#define UPPERRED 15
+#define UPPERRED 10
 
-#define LOWERGREEN 15 
+#define LOWERGREEN 10
 #define UPPERGREEN 30
 
 #define LOWERBLUE 30
-#define UPPERBLUE 50
+#define UPPERBLUE 100
 
-#define RED 2
-#define GREEN 3
+#define RED 3
+#define GREEN 2
 #define BLUE 4
 
 //SENSOR
@@ -74,7 +74,7 @@ void loop(void) {
     if(delta_voltage < 0.02)
     {
       float temperature;
-      temperature = 141.3 - 333.2*voltage + 295.7*pow(voltage, 2) - 106.2*pow(voltage, 3) + 14.22*pow(voltage, 4);
+      temperature = 13.40 - 59.53*voltage + 83.16*pow(voltage, 2) - 34.98*pow(voltage, 3) + 5.518*pow(voltage, 4);
 
       Serial.println("");
       Serial.println("System settled");
